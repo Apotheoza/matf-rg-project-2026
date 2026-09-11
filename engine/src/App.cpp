@@ -11,6 +11,10 @@
 
 namespace engine::core {
 int App::run(int argc, char **argv) {
+// #temp
+    spdlog::flush_on(spdlog::level::trace);
+// Original code:
+// (none)
     try {
         engine_setup(argc, argv);
         app_setup();
@@ -21,10 +25,22 @@ int App::run(int argc, char **argv) {
             draw();
         }
         terminate();
+// #temp
     } catch (const util::Error &e) {
         handle_error(e);
         terminate();
+    } catch (const std::exception &e) {
+        spdlog::error("std::exception caught: {}", e.what());
+        terminate();
+    } catch (...) {
+        spdlog::error("Unknown exception caught!");
+        terminate();
     }
+// Original code:
+//  } catch (const util::Error &e) {
+//      handle_error(e);
+//      terminate();
+//  }
     return on_exit();
 }
 

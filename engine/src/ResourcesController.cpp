@@ -132,7 +132,10 @@ Model *ResourcesController::model(const std::string &name) {
         }
 
         spdlog::info("load_model(name={}, path={})", name, model_path.string());
-        const aiScene *scene = importer.ReadFile(model_path, flags);
+// #temp
+        const aiScene *scene = importer.ReadFile(model_path.string(), flags);
+// Original code:
+//      const aiScene *scene = importer.ReadFile(model_path, flags);
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
             std::string msg = std::format("Assimp error while reading model: {} from path {}.", model_path.string(), name);
             throw util::EngineError(util::EngineError::Type::AssetLoadingError, msg);
@@ -149,7 +152,10 @@ Texture *ResourcesController::texture(const std::string &name, const std::filesy
     if (!result) {
         spdlog::info("load_texture(path={})", path.string());
         auto texture = graphics::OpenGL::generate_texture(path, flip_uvs);
-        result = std::make_unique<Texture>(Texture(texture, type, path, path.stem()));
+// #temp
+        result = std::make_unique<Texture>(Texture(texture, type, path, path.stem().string()));
+// Original code:
+//      result = std::make_unique<Texture>(Texture(texture, type, path, path.stem()));
     }
     return result.get();
 }

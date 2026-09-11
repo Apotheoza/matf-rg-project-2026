@@ -6,6 +6,10 @@
 #ifndef ARGPARSER_HPP
 #define ARGPARSER_HPP
 
+// #temp
+#include <cstdint>
+// Original code:
+// (missing #include <cstdint>)
 #include <optional>
 #include <string>
 #include <string_view>
