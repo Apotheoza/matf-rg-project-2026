@@ -20,6 +20,10 @@
       "sun2": {
         "path": "SUN2/SUN2.obj",
         "flip_uvs": true
+      },
+      "fenjer": {
+        "path": "fenjer/fenjer.obj",
+        "flip_uvs": true
       }
     }
   },

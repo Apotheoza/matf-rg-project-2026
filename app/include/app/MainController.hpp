@@ -14,30 +14,39 @@ public:
     }
 
 protected:
-    void initialize() override;                                            // Set up OpenGL state, camera, and textures
-    bool loop() override;                                                  // Process ESC key to exit
-    void update() override;                                                // Handle 'S' toggle, orbit progress, and camera
-    void begin_draw() override;                                            // Clear framebuffers
-    void draw() override;                                                  // Render skybox, models, and lighting
-    void end_draw() override;                                              // Swap buffers
+    void initialize() override;
+    bool loop() override;
+    void update() override;
+    void begin_draw() override;
+    void draw() override;
+    void end_draw() override;
 
 private:
-    void draw_skybox();                                                    // Render cubemap skybox
-    void draw_sun(float time);                                             // Render 2.5D sun models
-    void draw_asteroid(const glm::vec3 &planet_pos, float rotation_angle);    // Render asteroid
-    void draw_prince(const glm::vec3 &planet_pos, float rotation_angle);      // Render Little Prince
-    void draw_fox(const glm::vec3 &planet_pos, float rotation_angle);         // Render Fox
+    enum class CameraMode {
+        STAR_SYSTEM,
+        PRINCE_ASTEROID,
+        LAMPLIGHT_ASTEROID
+    };
 
-    engine::resources::Texture *m_asteroid_texture = nullptr;              // Asteroid texture
-    engine::resources::Texture *m_prince_texture = nullptr;                // Little Prince texture
-    engine::resources::Texture *m_fox_texture = nullptr;                   // Fox texture
-    engine::resources::Texture *m_sun1_texture = nullptr;                  // Sun layer 1 texture
-    engine::resources::Texture *m_sun2_texture = nullptr;                  // Sun layer 2 texture
+    void draw_skybox();
+    void draw_star(float time);
+    void draw_prince_asteroid(const glm::vec3 &planet_pos, float rotation_angle);
+    void draw_fenjer_asteroid(const glm::mat4 &model_matrix);
 
-    bool m_orbit_active = false;                                           // Toggle state when 'S' is pressed
-    float m_orbit_progress = 0.0f;                                         // 0.0 = asteroid view, 1.0 = sun view
-    float m_orbit_angle = 0.0f;                                            // Orbital revolution angle around the sun
-    glm::vec3 m_sun_pos = glm::vec3(28.0f, 0.0f, 0.0f);                    // Fixed sun position in world space
+    engine::resources::Texture *m_asteroid_texture = nullptr;
+    engine::resources::Texture *m_prince_texture = nullptr;
+    engine::resources::Texture *m_fox_texture = nullptr;
+    engine::resources::Texture *m_sun1_texture = nullptr;
+    engine::resources::Texture *m_sun2_texture = nullptr;
+    engine::resources::Texture *m_fenjer_texture = nullptr;
+
+    CameraMode m_camera_mode = CameraMode::STAR_SYSTEM;
+    bool m_is_spinning = true;
+    float m_orbit_angle = 0.0f;
+    float m_self_rotation = 0.0f;
+    glm::vec3 m_cam_pos = glm::vec3(0.0f, 24.0f, 52.0f);
+    glm::vec3 m_cam_target = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 m_star_pos = glm::vec3(0.0f, 0.0f, 0.0f);
 };
 
 } // namespace app
