@@ -5,9 +5,13 @@
         "path": "asteroid/asteroid.obj",
         "flip_uvs": true
       },
-      "backpack": {
-        "path": "backpack/backpack.obj",
-        "flip_uvs": false
+      "mali_princ": {
+        "path": "mali princ/mali princ.obj",
+        "flip_uvs": true
+      },
+      "fox": {
+        "path": "fox/fox.obj",
+        "flip_uvs": true
       }
     }
   },
