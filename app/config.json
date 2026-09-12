@@ -12,6 +12,14 @@
       "fox": {
         "path": "fox/fox.obj",
         "flip_uvs": true
+      },
+      "sun1": {
+        "path": "SUN1/SUN1.obj",
+        "flip_uvs": true
+      },
+      "sun2": {
+        "path": "SUN2/SUN2.obj",
+        "flip_uvs": true
       }
     }
   },
