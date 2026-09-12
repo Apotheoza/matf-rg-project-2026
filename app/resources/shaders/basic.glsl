@@ -67,8 +67,8 @@ void main() {
     float pDiff = max(dot(norm, pLightDir), 0.0);
     vec3 pDiffuse = pDiff * pointLightColor;
     vec3 pReflect = reflect(-pLightDir, norm);
-    float pSpec = pow(max(dot(viewDir, pReflect), 0.0), 32);
-    vec3 pSpecular = 0.3 * pSpec * pointLightColor;
+    float pSpec = pow(max(dot(viewDir, pReflect), 0.0), 16);
+    vec3 pSpecular = 0.05 * pSpec * pointLightColor;
     float pDist = length(pointLightPos - FragPos);
     float pAttenuation = 1.0 / (1.0 + 0.02 * pDist + 0.0008 * pDist * pDist);
     vec3 pointLight = (pDiffuse + pSpecular) * pAttenuation;
@@ -83,8 +83,8 @@ void main() {
         float sDiff = max(dot(norm, sLightDir), 0.0);
         vec3 sDiffuse = sDiff * spotLightColor;
         vec3 sReflect = reflect(-sLightDir, norm);
-        float sSpec = pow(max(dot(viewDir, sReflect), 0.0), 32);
-        vec3 sSpecular = 0.5 * sSpec * spotLightColor;
+        float sSpec = pow(max(dot(viewDir, sReflect), 0.0), 16);
+        vec3 sSpecular = 0.08 * sSpec * spotLightColor;
         float sDist = length(spotLightPos - FragPos);
         float sAttenuation = 1.0 / (1.0 + 0.08 * sDist + 0.025 * sDist * sDist);
         spotLight = (sDiffuse + sSpecular) * intensity * sAttenuation;

@@ -43,9 +43,11 @@ void MainController::update() {
         if (m_camera_mode == CameraMode::PRINCE_ASTEROID) {
             m_camera_mode = CameraMode::STAR_SYSTEM;
             m_is_spinning = true;
+            m_lamplight_timer = 0.0f;
         } else {
             m_camera_mode = CameraMode::PRINCE_ASTEROID;
             m_is_spinning = false;
+            m_lamplight_timer = 0.0f;
         }
     }
 
@@ -53,9 +55,11 @@ void MainController::update() {
         if (m_camera_mode == CameraMode::LAMPLIGHT_ASTEROID) {
             m_camera_mode = CameraMode::STAR_SYSTEM;
             m_is_spinning = true;
+            m_lamplight_timer = 0.0f;
         } else {
             m_camera_mode = CameraMode::LAMPLIGHT_ASTEROID;
             m_is_spinning = false;
+            m_lamplight_timer = 0.0f;
         }
     }
 
@@ -63,6 +67,16 @@ void MainController::update() {
         platform->key(engine::platform::KeyId::KEY_SPACE).state() == engine::platform::Key::State::JustPressed) {
         m_camera_mode = CameraMode::STAR_SYSTEM;
         m_is_spinning = true;
+        m_lamplight_timer = 0.0f;
+    }
+
+    const auto &mouse = platform->mouse();
+    if (mouse.scroll != 0.0f) {
+        m_lamp_intensity = glm::clamp(m_lamp_intensity + mouse.scroll * 0.5f, 0.0f, 10.0f);
+    }
+
+    if (m_camera_mode == CameraMode::LAMPLIGHT_ASTEROID) {
+        m_lamplight_timer += dt;
     }
 
     if (m_is_spinning) {
@@ -118,6 +132,13 @@ void MainController::draw() {
     glm::vec3 spot_pos = glm::vec3(model_fenjer * glm::vec4(0.0f, 9.93f, 0.0f, 1.0f));
     glm::vec3 spot_dir = glm::normalize(glm::mat3(model_fenjer) * glm::vec3(0.0f, -0.92f, -0.38f));
 
+    float flicker_factor = 1.0f;
+    if (m_camera_mode == CameraMode::LAMPLIGHT_ASTEROID && m_lamplight_timer >= 2.0f && m_lamplight_timer <= 3.6f) {
+        float phase = m_lamplight_timer - 2.0f;
+        float pattern = std::sin(phase * 45.0f) * std::cos(phase * 23.0f);
+        flicker_factor = (pattern > 0.15f) ? 1.0f : ((pattern > -0.3f) ? 0.2f : 0.0f);
+    }
+
     auto resources = engine::core::Controller::get<engine::resources::ResourcesController>();
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
     auto shader = resources->shader("basic");
@@ -135,7 +156,7 @@ void MainController::draw() {
 
         shader->set_vec3("spotLightPos", spot_pos);
         shader->set_vec3("spotLightDir", spot_dir);
-        shader->set_vec3("spotLightColor", glm::vec3(1.0f, 0.85f, 0.3f) * 4.0f);
+        shader->set_vec3("spotLightColor", glm::vec3(1.0f, 0.85f, 0.3f) * m_lamp_intensity * flicker_factor);
         shader->set_float("spotCutOff", glm::cos(glm::radians(25.0f)));
         shader->set_float("spotOuterCutOff", glm::cos(glm::radians(45.0f)));
     }

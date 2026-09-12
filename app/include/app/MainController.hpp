@@ -44,6 +44,8 @@ private:
     bool m_is_spinning = true;
     float m_orbit_angle = 0.0f;
     float m_self_rotation = 0.0f;
+    float m_lamp_intensity = 3.5f;
+    float m_lamplight_timer = 0.0f;
     glm::vec3 m_cam_pos = glm::vec3(0.0f, 24.0f, 52.0f);
     glm::vec3 m_cam_target = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 m_star_pos = glm::vec3(0.0f, 0.0f, 0.0f);
