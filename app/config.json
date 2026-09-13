@@ -1,11 +1,35 @@
 {
   "resources": {
     "models": {
+      "asteroid": {
+        "path": "asteroid/asteroid.obj",
+        "flip_uvs": true
+      },
+      "mali_princ": {
+        "path": "mali princ/mali princ.obj",
+        "flip_uvs": true
+      },
+      "fox": {
+        "path": "fox/fox.obj",
+        "flip_uvs": true
+      },
+      "sun1": {
+        "path": "SUN1/SUN1.obj",
+        "flip_uvs": true
+      },
+      "sun2": {
+        "path": "SUN2/SUN2.obj",
+        "flip_uvs": true
+      },
+      "fenjer": {
+        "path": "fenjer/fenjer.obj",
+        "flip_uvs": true
+      }
     }
   },
   "window": {
-    "height": 600,
-    "title": "Hello, window!",
-    "width": 800
+    "height": 1080,
+    "title": "MATF RG Project 2026",
+    "width": 1920
   }
 }
