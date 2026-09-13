@@ -261,10 +261,14 @@ void MainController::draw_prince_asteroid(const glm::vec3 &planet_pos, float rot
 
     if (fox) {
         glm::mat4 model_fox = model_asteroid;
+        model_fox = glm::scale(model_fox, glm::vec3(0.32f));
+        model_fox = glm::rotate(model_fox, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        model_fox = glm::rotate(model_fox, glm::radians(-10.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+       
         model_fox = glm::translate(model_fox, glm::vec3(1.1f, 2.75f, 0.3f));
-        model_fox = glm::rotate(model_fox, glm::radians(-35.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        model_fox = glm::scale(model_fox, glm::vec3(0.25f));
-        model_fox = glm::translate(model_fox, glm::vec3(-0.8f, 2.54f, 0.0f));
+        //model_fox = glm::translate(model_fox, glm::vec3(-0.8f, 2.54f, 0.0f));
+        model_fox = glm::translate(model_fox, glm::vec3(-2.0f, 9.7f, 0.0f));
+
         shader->set_mat4("model", model_fox);
         glm::mat3 norm_fox = glm::transpose(glm::inverse(glm::mat3(model_fox)));
         shader->set_mat3("normalMatrix", norm_fox);
