@@ -75,13 +75,28 @@ void MainController::update() {
         m_lamp_intensity = glm::clamp(m_lamp_intensity + mouse.scroll * 0.5f, 0.0f, 10.0f);
     }
 
+    if (platform->key(engine::platform::KeyId::KEY_C).state() == engine::platform::Key::State::JustPressed) {
+        m_auto_cycle_colors = !m_auto_cycle_colors;
+        m_color_cycle_timer = 0.0f;
+    }
+
     if (platform->key(engine::platform::KeyId::KEY_RIGHT).state() == engine::platform::Key::State::JustPressed ||
         platform->key(engine::platform::KeyId::KEY_UP).state() == engine::platform::Key::State::JustPressed) {
         m_lamp_color_index = (m_lamp_color_index + 1) % m_lamp_colors.size();
+        m_color_cycle_timer = 0.0f;
     }
     if (platform->key(engine::platform::KeyId::KEY_LEFT).state() == engine::platform::Key::State::JustPressed ||
         platform->key(engine::platform::KeyId::KEY_DOWN).state() == engine::platform::Key::State::JustPressed) {
         m_lamp_color_index = (m_lamp_color_index + m_lamp_colors.size() - 1) % m_lamp_colors.size();
+        m_color_cycle_timer = 0.0f;
+    }
+
+    if (m_auto_cycle_colors) {
+        m_color_cycle_timer += dt;
+        if (m_color_cycle_timer >= 0.6f) {
+            m_color_cycle_timer = 0.0f;
+            m_lamp_color_index = (m_lamp_color_index + 1) % m_lamp_colors.size();
+        }
     }
 
     if (m_camera_mode == CameraMode::LAMPLIGHT_ASTEROID) {

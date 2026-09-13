@@ -56,6 +56,8 @@ private:
         glm::vec3(1.0f, 1.0f, 1.0f)
     };
     std::size_t m_lamp_color_index = 0;
+    bool m_auto_cycle_colors = false;
+    float m_color_cycle_timer = 0.0f;
     glm::vec3 m_cam_pos = glm::vec3(0.0f, 24.0f, 52.0f);
     glm::vec3 m_cam_target = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 m_star_pos = glm::vec3(0.0f, 0.0f, 0.0f);
