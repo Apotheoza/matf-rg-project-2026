@@ -75,6 +75,15 @@ void MainController::update() {
         m_lamp_intensity = glm::clamp(m_lamp_intensity + mouse.scroll * 0.5f, 0.0f, 10.0f);
     }
 
+    if (platform->key(engine::platform::KeyId::KEY_RIGHT).state() == engine::platform::Key::State::JustPressed ||
+        platform->key(engine::platform::KeyId::KEY_UP).state() == engine::platform::Key::State::JustPressed) {
+        m_lamp_color_index = (m_lamp_color_index + 1) % m_lamp_colors.size();
+    }
+    if (platform->key(engine::platform::KeyId::KEY_LEFT).state() == engine::platform::Key::State::JustPressed ||
+        platform->key(engine::platform::KeyId::KEY_DOWN).state() == engine::platform::Key::State::JustPressed) {
+        m_lamp_color_index = (m_lamp_color_index + m_lamp_colors.size() - 1) % m_lamp_colors.size();
+    }
+
     if (m_camera_mode == CameraMode::LAMPLIGHT_ASTEROID) {
         m_lamplight_timer += dt;
     }
@@ -156,7 +165,7 @@ void MainController::draw() {
 
         shader->set_vec3("spotLightPos", spot_pos);
         shader->set_vec3("spotLightDir", spot_dir);
-        shader->set_vec3("spotLightColor", glm::vec3(1.0f, 0.85f, 0.3f) * m_lamp_intensity * flicker_factor);
+        shader->set_vec3("spotLightColor", m_lamp_colors[m_lamp_color_index] * m_lamp_intensity * flicker_factor);
         shader->set_float("spotCutOff", glm::cos(glm::radians(25.0f)));
         shader->set_float("spotOuterCutOff", glm::cos(glm::radians(45.0f)));
     }
