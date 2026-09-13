@@ -14,13 +14,8 @@ file(GLOB engine-sources src/*.cpp)
 file(GLOB engine-headers include/engine/*.hpp)
 
 ################ Libs ################
-# #temp
-set(SPDLOG_NO_TLS ON CACHE BOOL "" FORCE)
 add_subdirectory(libs/spdlog EXCLUDE_FROM_ALL)
-add_compile_definitions(SPDLOG_NO_TLS SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE SPDLOG_DEBUG_ON SPDLOG_TRACE_ON RG_ENGINE_TRACE)
-# Original code:
-# add_subdirectory(libs/spdlog EXCLUDE_FROM_ALL)
-# add_compile_definitions(SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE SPDLOG_DEBUG_ON SPDLOG_TRACE_ON RG_ENGINE_TRACE)
+add_compile_definitions(SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE SPDLOG_DEBUG_ON SPDLOG_TRACE_ON RG_ENGINE_TRACE)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
 find_package(ASSIMP REQUIRED)

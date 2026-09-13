@@ -28,10 +28,7 @@ uint32_t OpenGL::generate_texture(const std::filesystem::path &path, bool flip_u
 
     int32_t width, height, nr_components;
     stbi_set_flip_vertically_on_load(flip_uvs);
-// #temp
-    uint8_t *data = stbi_load(path.string().c_str(), &width, &height, &nr_components, 0);
-// Original code:
-//  uint8_t *data = stbi_load(path.c_str(), &width, &height, &nr_components, 0);
+    uint8_t *data = stbi_load(path.c_str(), &width, &height, &nr_components, 0);
     defer {
         stbi_image_free(data);
     };
@@ -144,18 +141,12 @@ uint32_t OpenGL::load_skybox_textures(const std::filesystem::path &path, bool fl
     int width, height, nr_channels;
     for (const auto &file: std::filesystem::directory_iterator(path)) {
         stbi_set_flip_vertically_on_load(flip_uvs);
-// #temp
-        unsigned char *data = stbi_load(absolute(file).string().c_str(), &width, &height, &nr_channels, 0);
-// Original code:
-//      unsigned char *data = stbi_load(absolute(file).c_str(), &width, &height, &nr_channels, 0);
+        unsigned char *data = stbi_load(absolute(file).c_str(), &width, &height, &nr_channels, 0);
         defer {
             stbi_image_free(data);
         };
         if (data) {
-// #temp
-            uint32_t i = face_index(file.path().stem().string());
-// Original code:
-//          uint32_t i = face_index(file.path().stem().c_str());
+            uint32_t i = face_index(file.path().stem().c_str());
             int32_t format = texture_format(nr_channels);
             CHECKED_GL_CALL(glTexImage2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, format, width, height, 0, format,
                             GL_UNSIGNED_BYTE,
