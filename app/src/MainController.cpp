@@ -8,8 +8,8 @@ void MainController::initialize() {
     engine::graphics::OpenGL::enable_depth_testing();
 
     auto graphics = engine::core::Controller::get<engine::graphics::GraphicsController>();
-    m_cam_pos = glm::vec3(0.0f, 24.0f, 52.0f);
-    m_cam_target = glm::vec3(0.0f, 0.0f, 0.0f);
+    m_cam_pos = glm::vec3(0.0f, 18.0f, 58.0f);
+    m_cam_target = glm::vec3(0.0f, 2.0f, 0.0f);
     graphics->camera()->Position = m_cam_pos;
     glm::vec3 init_dir = glm::normalize(m_cam_target - m_cam_pos);
     graphics->camera()->Pitch = glm::degrees(std::asin(glm::clamp(init_dir.y, -1.0f, 1.0f)));
@@ -91,14 +91,14 @@ void MainController::update() {
     glm::vec3 target_look;
 
     if (m_camera_mode == CameraMode::PRINCE_ASTEROID) {
-        target_pos = prince_pos + glm::vec3(0.0f, 1.5f, 14.0f);
-        target_look = prince_pos + glm::vec3(0.0f, 1.5f, 0.0f);
+        target_pos = prince_pos + glm::vec3(0.0f, 0.5f, 16.5f);
+        target_look = prince_pos + glm::vec3(0.0f, 1.95f, 0.0f);
     } else if (m_camera_mode == CameraMode::LAMPLIGHT_ASTEROID) {
-        target_pos = fenjer_pos + glm::vec3(0.0f, 8.5f, 18.0f);
-        target_look = fenjer_pos + glm::vec3(0.0f, 6.8f, 0.0f);
+        target_pos = fenjer_pos + glm::vec3(0.0f, 8.0f, 19.5f);
+        target_look = fenjer_pos + glm::vec3(0.0f, 7.5f, 0.0f);
     } else {
-        target_pos = glm::vec3(0.0f, 24.0f, 52.0f);
-        target_look = glm::vec3(0.0f, 0.0f, 0.0f);
+        target_pos = glm::vec3(0.0f, 18.0f, 58.0f);
+        target_look = glm::vec3(0.0f, 2.0f, 0.0f);
     }
 
     float blend = glm::clamp(dt * 3.5f, 0.0f, 1.0f);
